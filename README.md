@@ -2,4 +2,4 @@
 Project lifecycle
 
 drive link:
-https://drive.google.com/file/d/1RrFVAqpM08LlOveW1rQQ2KM7p4IkXtF3/view?usp=drivesdk
+https://drive.google.com/drive/folders/146Lmove2jRP2TYwBOXCBlq-cz3z9V7B7?usp=sharing
