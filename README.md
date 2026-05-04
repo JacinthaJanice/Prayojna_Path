@@ -4,100 +4,61 @@ Project lifecycle
 drive link:
 https://drive.google.com/drive/folders/18EJgL5evH_WGUsI512HfTcAXwmhR2vyx?usp=drive_link
 
-# Project Portal
+# Project Portal - Setup Guide on Linux VM (Ubuntu)
 
-Project Portal is a Flask-based web application for managing projects, project details, meetings, costs, analysis, closures, and report exports.
+A complete step-by-step guide to run this **Flask-based Project Management Portal** on a Linux Virtual Machine using VMware Workstation.
 
-## What You Need
+---
 
-- Windows PC or a Windows virtual machine
-- Python 3.10 or newer
-- `pip`
-- `wkhtmltopdf` for PDF export
+## 🎯 Target VM Specifications (Recommended)
 
-## Install on Your PC or VMware VM
+| Component          | Recommended       | Minimum     |
+|--------------------|-------------------|-------------|
+| Guest OS           | Ubuntu 24.04 LTS  | Ubuntu 22.04 LTS |
+| vCPU               | 4 cores           | 2 cores     |
+| RAM                | 8 GB              | 4 GB        |
+| Disk Space         | 60 GB             | 40 GB       |
+| Network            | NAT (default)     | Bridged (for LAN access) |
 
-1. Create a folder for the project and copy all files into it.
-2. If you are using VMware, create a new Windows virtual machine first and copy the project folder into the VM.
-3. Open a terminal in the project folder.
-4. Create and activate a virtual environment:
+---
 
-```powershell
-py -m venv .venv
-.venv\Scripts\Activate.ps1
-```
+## Step 1: Prepare Host Machine
 
-4. Install dependencies:
+1. Enable **Virtualization** (Intel VT-x or AMD-V) in your BIOS/UEFI settings.
+2. Install **VMware Workstation Pro** (or Player) on your Windows host.
+3. Download the latest Ubuntu ISO from [ubuntu.com](https://ubuntu.com/download/desktop).
 
-```powershell
-pip install -r requirements.txt
-```
+---
 
-5. Install `wkhtmltopdf` if you want PDF download support.
-6. If `wkhtmltopdf` is not in PATH, set the `WKHTMLTOPDF_PATH` environment variable to the full executable path.
-7. If you are using VMware Tools, install them inside the VM for better mouse, display, and clipboard integration.
+## Step 2: Create Ubuntu VM in VMware Workstation
 
-## Run the Application
+1. Open VMware Workstation → **Create a New Virtual Machine**.
+2. Select **Typical (recommended)**.
+3. Choose **Installer disc image file (iso)** and select the Ubuntu ISO.
+4. Set VM name: `project-portal-ubuntu`.
+5. Set disk size to **60 GB**.
+6. Click **Customize Hardware**:
+   - Memory: **8192 MB**
+   - Processors: **4**
+   - Network Adapter: **NAT**
+   - (Optional) Enable **Shared Folders**
+7. Click **Finish** and power on the VM.
 
-You can start the app in either of these ways:
+---
 
-```powershell
-python app.py
-```
+## Step 3: Install Ubuntu
 
-or
+- Choose **Normal installation**.
+- Enable **third-party software** for graphics and Wi-Fi.
+- Create your username and password.
+- Complete installation and reboot.
+- Remove the ISO when prompted.
 
-```powershell
-python start.py
-```
+---
 
-The app will open in your browser at:
+## Step 4: Install VMware Guest Tools
 
-```text
-http://127.0.0.1:5000/
-```
-
-## Default Login
-
-If the database is being created for the first time, the app seeds a default admin user:
-
-- Username: `admin`
-- Password: `admin@72$`
-
-Change the password after first login.
-
-## Notes for VM Installation
-
-- Make sure the VMware VM has network access if you need to install Python packages.
-- If you are sharing the app between host and VM, keep all project files inside the VM or use a shared folder carefully.
-- If PDF export fails, verify that `wkhtmltopdf` is installed and reachable from the VM.
-
-## Suggested Screenshots for the README
-
-You can add screenshots in a folder such as `screenshots/` and reference them in the README.
-
-Recommended screenshots:
-
-1. VMware VM setup or Windows desktop inside the VM.
-2. Terminal showing virtual environment activation and dependency installation.
-3. Browser showing the Project Portal login page.
-4. Dashboard or project list page after login.
-5. Add Project form.
-6. Project details or analysis page.
-7. PDF download output or exported report preview.
-
-Example markdown if you want to add images later:
-
-```markdown
-![Login Page](screenshots/login-page.png)
-![Dashboard](screenshots/dashboard.png)
-```
-
-## Main Files
-
-- `app.py` - main Flask application
-- `start.py` - launches the app and opens the browser
-- `requirements.txt` - Python dependencies
-- `templates/` - HTML templates
-- `static/` - CSS, JS, and other static files
-
+```bash
+sudo apt update
+sudo apt install -y open-vm-tools open-vm-tools-desktop
+sudo reboot
